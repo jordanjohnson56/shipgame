@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://d1yulp8eccvlb"]
+
+[ext_resource type="Script" path="res://main.gd" id="1_x3x6b"]
+[ext_resource type="PackedScene" uid="uid://cjv6ob8bb0414" path="res://player.tscn" id="2_fnnxj"]
+[ext_resource type="AudioStream" uid="uid://bdrbu8r7ovv1d" path="res://sound/fire.wav" id="3_fqxxp"]
+
+[node name="Main" type="Node"]
+script = ExtResource("1_x3x6b")
+
+[node name="Player" parent="." instance=ExtResource("2_fnnxj")]
+position = Vector2(975, 556)
+
+[node name="FireCooldown" type="Timer" parent="."]
+wait_time = 0.25
+one_shot = true
+
+[node name="FireSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_fqxxp")

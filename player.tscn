@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://cjv6ob8bb0414"]
+
+[ext_resource type="Script" path="res://player.gd" id="1_loiov"]
+[ext_resource type="Texture2D" uid="uid://cwhouw8q08ugc" path="res://art/ship.png" id="2_oq7px"]
+
+[node name="Player" type="Area2D"]
+script = ExtResource("1_loiov")
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+rotation = 1.5708
+texture = ExtResource("2_oq7px")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+rotation = 1.5708
+polygon = PackedVector2Array(-16, 16, 0, -16, 16, 16, 11, 16, 0, 10, -11, 16)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(2, 2)

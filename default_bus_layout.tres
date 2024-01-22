@@ -1,0 +1,27 @@
+[gd_resource type="AudioBusLayout" load_steps=4 format=3 uid="uid://h6hrj5150ng4"]
+
+[sub_resource type="AudioEffectReverb" id="AudioEffectReverb_lftk1"]
+resource_name = "Reverb"
+room_size = 0.6
+damping = 0.25
+hipass = 0.2
+
+[sub_resource type="AudioEffectEQ" id="AudioEffectEQ_b73cj"]
+resource_name = "EQ"
+band_db/32_hz = -6.0
+band_db/100_hz = -6.0
+band_db/320_hz = -6.0
+band_db/1000_hz = -6.0
+band_db/3200_hz = -4.0
+
+[sub_resource type="AudioEffectHighPassFilter" id="AudioEffectHighPassFilter_vgwwd"]
+resource_name = "HighPassFilter"
+cutoff_hz = 500.0
+
+[resource]
+bus/0/effect/0/effect = SubResource("AudioEffectReverb_lftk1")
+bus/0/effect/0/enabled = true
+bus/0/effect/1/effect = SubResource("AudioEffectEQ_b73cj")
+bus/0/effect/1/enabled = true
+bus/0/effect/2/effect = SubResource("AudioEffectHighPassFilter_vgwwd")
+bus/0/effect/2/enabled = true
