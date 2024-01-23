@@ -55,6 +55,11 @@ func game_over():
 
 func _on_player_hurt():
     $HUD.set_health($Player.health)
+    var particles = $HitParticles.duplicate()
+    particles.emitting = true
+    particles.position = $Player.position
+    particles.finished.connect(particles.queue_free)
+    add_child(particles)
 
 
 func _on_difficulty_timer_timeout():

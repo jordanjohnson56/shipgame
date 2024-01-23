@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://d1yulp8eccvlb"]
+[gd_scene load_steps=11 format=3 uid="uid://d1yulp8eccvlb"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_x3x6b"]
 [ext_resource type="PackedScene" uid="uid://cjv6ob8bb0414" path="res://player.tscn" id="2_fnnxj"]
@@ -10,6 +10,29 @@ _data = {
 "points": PackedVector2Array(0, 0, 0, 0, -384, -256, 0, 0, 0, 0, 384, -256, 0, 0, 0, 0, 384, 256, 0, 0, 0, 0, -384, 256, 0, 0, 0, 0, -384, -256)
 }
 point_count = 5
+
+[sub_resource type="Gradient" id="Gradient_0mphx"]
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_wecqc"]
+gradient = SubResource("Gradient_0mphx")
+
+[sub_resource type="Curve" id="Curve_yn4x0"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.318681), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_6ifv7"]
+curve = SubResource("Curve_yn4x0")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_r8j0u"]
+particle_flag_disable_z = true
+radial_velocity_min = 100.0
+radial_velocity_max = 100.0
+gravity = Vector3(0, 0, 0)
+scale_min = 0.5
+scale_max = 2.5
+scale_curve = SubResource("CurveTexture_6ifv7")
+color_ramp = SubResource("GradientTexture1D_wecqc")
 
 [node name="Main" type="Node"]
 script = ExtResource("1_x3x6b")
@@ -41,6 +64,14 @@ wait_time = 5.0
 autostart = true
 
 [node name="Seconds" type="Timer" parent="."]
+
+[node name="HitParticles" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 100
+process_material = SubResource("ParticleProcessMaterial_r8j0u")
+lifetime = 0.4
+one_shot = true
+explosiveness = 1.0
 
 [connection signal="died" from="Player" to="." method="game_over"]
 [connection signal="hurt" from="Player" to="." method="_on_player_hurt"]
