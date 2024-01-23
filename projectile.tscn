@@ -6,7 +6,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jt0nu"]
 size = Vector2(4, 14)
 
-[node name="Projectile" type="Area2D"]
+[node name="Projectile" type="Area2D" groups=["bullet"]]
 z_index = -1
 script = ExtResource("1_wpu2c")
 metadata/_edit_group_ = true

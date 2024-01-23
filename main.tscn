@@ -1,14 +1,20 @@
-[gd_scene load_steps=4 format=3 uid="uid://d1yulp8eccvlb"]
+[gd_scene load_steps=6 format=3 uid="uid://d1yulp8eccvlb"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_x3x6b"]
 [ext_resource type="PackedScene" uid="uid://cjv6ob8bb0414" path="res://player.tscn" id="2_fnnxj"]
 [ext_resource type="AudioStream" uid="uid://bdrbu8r7ovv1d" path="res://sound/fire.wav" id="3_fqxxp"]
+[ext_resource type="PackedScene" uid="uid://cxavdnpec18y3" path="res://hud.tscn" id="4_ki6ys"]
+
+[sub_resource type="Curve2D" id="Curve2D_w5d2k"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -384, -256, 0, 0, 0, 0, 384, -256, 0, 0, 0, 0, 384, 256, 0, 0, 0, 0, -384, 256, 0, 0, 0, 0, -384, -256)
+}
+point_count = 5
 
 [node name="Main" type="Node"]
 script = ExtResource("1_x3x6b")
 
 [node name="Player" parent="." instance=ExtResource("2_fnnxj")]
-position = Vector2(975, 556)
 
 [node name="FireCooldown" type="Timer" parent="."]
 wait_time = 0.25
@@ -18,3 +24,17 @@ one_shot = true
 stream = ExtResource("3_fqxxp")
 volume_db = 10.0
 bus = &"FX"
+
+[node name="EnemySpawns" type="Path2D" parent="."]
+curve = SubResource("Curve2D_w5d2k")
+
+[node name="EnemySpawnPoint" type="PathFollow2D" parent="EnemySpawns"]
+position = Vector2(-384, -256)
+
+[node name="EnemySpawnTimer" type="Timer" parent="."]
+
+[node name="HUD" parent="." instance=ExtResource("4_ki6ys")]
+
+[connection signal="died" from="Player" to="." method="game_over"]
+[connection signal="hurt" from="Player" to="." method="_on_player_hurt"]
+[connection signal="timeout" from="EnemySpawnTimer" to="." method="_on_enemy_spawn_timer_timeout"]
