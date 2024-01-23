@@ -1,14 +1,9 @@
 extends Node
 
+@export var initial_enemy_timer = 1.0
 var projectile_scene = preload("res://projectile.tscn")
 var enemy_scene = preload("res://enemy.tscn")
 var game_started = false
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-    $EnemySpawnTimer.start()
-    $HUD.set_health($Player.health)
-    game_started = true
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -17,13 +12,23 @@ func _process(_delta):
     if Input.is_action_pressed("close_game"):
         get_tree().quit()
 
-    # Fire when clicked
-    if Input.is_action_pressed("fire") and $FireCooldown.is_stopped():
-        var shot = projectile_scene.instantiate()
-        shot.position = $Player.position
-        add_child(shot)
-        $FireCooldown.start()
-        $FireSound.play()
+    if game_started:
+        # Fire when clicked
+        if Input.is_action_pressed("fire") and $FireCooldown.is_stopped():
+            var shot = projectile_scene.instantiate()
+            shot.position = $Player.position
+            add_child(shot)
+            $FireCooldown.start()
+            $FireSound.play()
+
+
+func start_game():
+    $Player.enable()
+    $EnemySpawnTimer.wait_time = initial_enemy_timer
+    $EnemySpawnTimer.start()
+    $Seconds.start()
+    $HUD.set_health($Player.health)
+    game_started = true
 
 
 func spawn_enemy():
@@ -39,14 +44,19 @@ func spawn_enemy():
 
 
 func game_over():
-    game_started = false
+    $EnemySpawnTimer.stop()
+    $Seconds.stop()
     $HUD.game_over()
+    game_started = false
+    await get_tree().create_timer(3).timeout
+    $HUD.reset()
+    get_tree().call_group("enemy", "queue_free")
 
 
 func _on_player_hurt():
     $HUD.set_health($Player.health)
 
 
-func _on_enemy_spawn_timer_timeout():
-    if game_started:
-        spawn_enemy()
+func _on_difficulty_timer_timeout():
+    var new_wait_time = clamp($EnemySpawnTimer.wait_time - 0.05, 0.05, 1)
+    $EnemySpawnTimer.wait_time = new_wait_time

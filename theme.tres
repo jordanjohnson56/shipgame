@@ -1,0 +1,13 @@
+[gd_resource type="Theme" load_steps=3 format=3 uid="uid://c1n8oddh3qabg"]
+
+[ext_resource type="FontFile" uid="uid://cc17y6l2eprtl" path="res://art/Montserrat-VariableFont_wght.ttf" id="1_3o3of"]
+
+[sub_resource type="FontVariation" id="FontVariation_bmqg4"]
+base_font = ExtResource("1_3o3of")
+variation_opentype = {
+2003265652: 200
+}
+
+[resource]
+default_font = SubResource("FontVariation_bmqg4")
+default_font_size = 60

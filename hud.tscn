@@ -1,6 +1,21 @@
-[gd_scene load_steps=2 format=3 uid="uid://cxavdnpec18y3"]
+[gd_scene load_steps=8 format=3 uid="uid://cxavdnpec18y3"]
 
 [ext_resource type="Script" path="res://hud.gd" id="1_pj8ef"]
+[ext_resource type="Theme" uid="uid://c1n8oddh3qabg" path="res://theme.tres" id="2_hf0dd"]
+[ext_resource type="Texture2D" uid="uid://dwxsapxs2a0ru" path="res://art/heart.png" id="2_w0vdw"]
+[ext_resource type="FontFile" uid="uid://cc17y6l2eprtl" path="res://art/Montserrat-VariableFont_wght.ttf" id="3_fi2hi"]
+
+[sub_resource type="FontVariation" id="FontVariation_nbt3y"]
+base_font = ExtResource("3_fi2hi")
+variation_opentype = {
+2003265652: 600
+}
+
+[sub_resource type="InputEventAction" id="InputEventAction_nso5x"]
+action = &"start"
+
+[sub_resource type="Shortcut" id="Shortcut_vmu77"]
+events = [SubResource("InputEventAction_nso5x")]
 
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource("1_pj8ef")
@@ -17,20 +32,72 @@ offset_right = 400.0
 offset_bottom = -10.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("2_hf0dd")
+theme_override_fonts/font = SubResource("FontVariation_nbt3y")
 theme_override_font_sizes/font_size = 60
 text = "message"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
 
-[node name="Health" type="Label" parent="."]
-offset_right = 100.0
+[node name="Health" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+metadata/_edit_group_ = true
+
+[node name="TextureRect" type="TextureRect" parent="Health"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 15.0
+offset_top = 10.0
+offset_right = 55.0
+offset_bottom = 50.0
+grow_vertical = 2
+texture = ExtResource("2_w0vdw")
+
+[node name="Label" type="Label" parent="Health"]
+offset_left = 40.0
+offset_right = 140.0
 offset_bottom = 100.0
-theme_override_colors/font_color = Color(1, 0.172549, 0.12549, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 2
+theme = ExtResource("2_hf0dd")
+theme_override_colors/font_color = Color(0.882353, 0.415686, 0.4, 1)
 theme_override_font_sizes/font_size = 60
 text = "0
 "
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="StartButton" type="Button" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -74.0
+offset_top = -41.5
+offset_right = 74.0
+offset_bottom = 41.5
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_hf0dd")
+theme_override_font_sizes/font_size = 48
+shortcut = SubResource("Shortcut_vmu77")
+shortcut_in_tooltip = false
+text = "Start"
+
+[node name="Time" type="Label" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 23.0
+grow_horizontal = 2
+theme = ExtResource("2_hf0dd")
+text = "0:00"
+
+[connection signal="pressed" from="StartButton" to="." method="_on_start_button_pressed"]
