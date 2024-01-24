@@ -19,7 +19,7 @@ func _process(_delta):
             shot.position = $Player.position
             add_child(shot)
             $FireCooldown.start()
-            $FireSound.play()
+            play_fire_sound()
 
 
 func start_game():
@@ -65,3 +65,10 @@ func _on_player_hurt():
 func _on_difficulty_timer_timeout():
     var new_wait_time = clamp($EnemySpawnTimer.wait_time - 0.05, 0.05, 1)
     $EnemySpawnTimer.wait_time = new_wait_time
+
+
+func play_fire_sound():
+    # Pick random fire sound
+    var child_index = randi_range(0, $FireSounds.get_child_count() - 1)
+    var fire_sound = $FireSounds.get_child(child_index)
+    fire_sound.play()

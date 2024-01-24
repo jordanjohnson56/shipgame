@@ -1,7 +1,7 @@
 extends Area2D
 
 @export var speed: float = 600.0
-@export var damage: float = 1.0
+@export var damage: float = 0.5
 var explosion_scene = preload("res://explode_particles.tscn")
 
 # Called when the node enters the scene tree for the first time.
