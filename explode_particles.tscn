@@ -1,0 +1,44 @@
+[gd_scene load_steps=7 format=3 uid="uid://cxu5lqwjy3h2t"]
+
+[ext_resource type="Script" path="res://explode_particles.gd" id="1_um8bu"]
+
+[sub_resource type="Curve" id="Curve_7xp32"]
+_data = [Vector2(0, 0.758242), 0.0, 0.0, 0, 0, Vector2(1, 0.197802), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_54nrl"]
+curve = SubResource("Curve_7xp32")
+
+[sub_resource type="Curve" id="Curve_5b6yx"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.10989), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_xaj8c"]
+curve = SubResource("Curve_5b6yx")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_skg5c"]
+particle_flag_disable_z = true
+inherit_velocity_ratio = 25.0
+direction = Vector3(-1, 0, 0)
+radial_velocity_min = 50.0
+radial_velocity_max = 100.0
+radial_velocity_curve = SubResource("CurveTexture_54nrl")
+gravity = Vector3(0, 0, 0)
+damping_min = 600.0
+damping_max = 600.0
+scale_max = 2.5
+scale_curve = SubResource("CurveTexture_xaj8c")
+color = Color(0.898039, 0.231373, 0.231373, 1)
+
+[node name="ExplodeParticles" type="GPUParticles2D"]
+z_index = 1
+emitting = false
+amount = 100
+process_material = SubResource("ParticleProcessMaterial_skg5c")
+lifetime = 0.4
+one_shot = true
+explosiveness = 1.0
+visibility_rect = Rect2(-9.98983, -10.3663, 19.5287, 20.8683)
+script = ExtResource("1_um8bu")
+
+[connection signal="finished" from="." to="." method="_on_finished"]

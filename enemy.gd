@@ -21,6 +21,8 @@ func _on_area_entered(area):
     if "bullet" in area.get_groups():
         # subtract bullet damage from health
         health -= area.damage
+        # explode bullet
+        area.explode()
         # check if dead
         if health <= 0:
             queue_free()
@@ -28,5 +30,3 @@ func _on_area_entered(area):
             # update healthbar
             var bar_size = (health / max_health) * healthbar_width
             $RemainingHealth.size.x = floor(bar_size)
-        # remove bullet
-        area.queue_free()
