@@ -1,9 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://d1yulp8eccvlb"]
+[gd_scene load_steps=12 format=3 uid="uid://d1yulp8eccvlb"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_x3x6b"]
 [ext_resource type="PackedScene" uid="uid://cjv6ob8bb0414" path="res://player.tscn" id="2_fnnxj"]
 [ext_resource type="AudioStream" uid="uid://bdrbu8r7ovv1d" path="res://sound/fire.wav" id="3_fqxxp"]
 [ext_resource type="PackedScene" uid="uid://cxavdnpec18y3" path="res://hud.tscn" id="4_ki6ys"]
+[ext_resource type="AudioStream" uid="uid://cxbbdll8wr5a7" path="res://sound/Hero Immortal.mp3" id="5_547um"]
 
 [sub_resource type="Curve2D" id="Curve2D_w5d2k"]
 _data = {
@@ -74,21 +75,26 @@ explosiveness = 1.0
 stream = ExtResource("3_fqxxp")
 volume_db = 10.0
 max_polyphony = 10
-bus = &"FX"
+bus = &"Projectiles"
 
 [node name="FireSoundMid" type="AudioStreamPlayer" parent="FireSounds"]
 stream = ExtResource("3_fqxxp")
 volume_db = 10.0
 pitch_scale = 0.95
 max_polyphony = 10
-bus = &"FX"
+bus = &"Projectiles"
 
 [node name="FireSoundLow" type="AudioStreamPlayer" parent="FireSounds"]
 stream = ExtResource("3_fqxxp")
 volume_db = 10.0
 pitch_scale = 0.9
 max_polyphony = 10
-bus = &"FX"
+bus = &"Projectiles"
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_547um")
+volume_db = -5.0
+autoplay = true
 
 [connection signal="died" from="Player" to="." method="game_over"]
 [connection signal="hurt" from="Player" to="." method="_on_player_hurt"]

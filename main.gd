@@ -65,6 +65,8 @@ func _on_player_hurt():
 func _on_difficulty_timer_timeout():
     var new_wait_time = clamp($EnemySpawnTimer.wait_time - 0.05, 0.05, 1)
     $EnemySpawnTimer.wait_time = new_wait_time
+    # Add one second to difficulty timer so difficulty doesn't ramp up too quickly
+    $DifficultyTimer.wait_time += 1
 
 
 func play_fire_sound():

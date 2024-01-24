@@ -1,31 +1,26 @@
-[gd_resource type="AudioBusLayout" load_steps=5 format=3 uid="uid://h6hrj5150ng4"]
+[gd_resource type="AudioBusLayout" load_steps=4 format=3 uid="uid://h6hrj5150ng4"]
 
 [sub_resource type="AudioEffectReverb" id="AudioEffectReverb_lftk1"]
 resource_name = "Reverb"
 room_size = 0.4
 damping = 0.25
 hipass = 0.3
-dry = 0.0
+dry = 0.5
 wet = 0.65
 
 [sub_resource type="AudioEffectEQ" id="AudioEffectEQ_b73cj"]
 resource_name = "EQ"
 band_db/32_hz = -6.0
 band_db/100_hz = -6.0
-band_db/320_hz = -6.0
 band_db/1000_hz = -6.0
 band_db/3200_hz = -4.0
 
 [sub_resource type="AudioEffectHighPassFilter" id="AudioEffectHighPassFilter_vgwwd"]
 resource_name = "HighPassFilter"
-cutoff_hz = 350.0
-
-[sub_resource type="AudioEffectPitchShift" id="AudioEffectPitchShift_p7l7q"]
-resource_name = "PitchShift"
-pitch_scale = 0.5
+cutoff_hz = 500.0
 
 [resource]
-bus/1/name = &"FX"
+bus/1/name = &"Projectiles"
 bus/1/solo = false
 bus/1/mute = false
 bus/1/bypass_fx = false
@@ -37,5 +32,3 @@ bus/1/effect/1/effect = SubResource("AudioEffectEQ_b73cj")
 bus/1/effect/1/enabled = true
 bus/1/effect/2/effect = SubResource("AudioEffectHighPassFilter_vgwwd")
 bus/1/effect/2/enabled = true
-bus/1/effect/3/effect = SubResource("AudioEffectPitchShift_p7l7q")
-bus/1/effect/3/enabled = true

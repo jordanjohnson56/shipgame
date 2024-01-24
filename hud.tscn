@@ -60,6 +60,7 @@ grow_vertical = 2
 texture = ExtResource("2_w0vdw")
 
 [node name="Label" type="Label" parent="Health"]
+layout_mode = 0
 offset_left = 40.0
 offset_right = 140.0
 offset_bottom = 100.0
@@ -99,5 +100,23 @@ offset_bottom = 23.0
 grow_horizontal = 2
 theme = ExtResource("2_hf0dd")
 text = "0:00"
+
+[node name="Label" type="Label" parent="."]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -210.0
+offset_top = -30.0
+offset_right = -9.0
+offset_bottom = -7.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_colors/font_color = Color(1, 1, 1, 0.352941)
+text = "a game by Jordan Johnson
+music by Trevor Lentz"
+horizontal_alignment = 2
+vertical_alignment = 2
 
 [connection signal="pressed" from="StartButton" to="." method="_on_start_button_pressed"]
