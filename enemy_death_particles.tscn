@@ -1,0 +1,42 @@
+[gd_scene load_steps=7 format=3 uid="uid://cdj72mfiw1ppd"]
+
+[ext_resource type="Script" path="res://enemy_death_particles.gd" id="1_vqpo4"]
+
+[sub_resource type="Gradient" id="Gradient_wd4w5"]
+colors = PackedColorArray(0.133333, 0.556863, 0.807843, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_0nuy0"]
+gradient = SubResource("Gradient_wd4w5")
+
+[sub_resource type="Curve" id="Curve_j8duf"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.197802), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_6w08v"]
+curve = SubResource("Curve_j8duf")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_f4egm"]
+particle_flag_disable_z = true
+radial_velocity_min = 100.0
+radial_velocity_max = 200.0
+gravity = Vector3(0, 0, 0)
+radial_accel_min = 100.0
+radial_accel_max = 200.0
+scale_min = 3.0
+scale_max = 10.0
+scale_curve = SubResource("CurveTexture_6w08v")
+color_ramp = SubResource("GradientTexture1D_0nuy0")
+
+[node name="EnemyDeathParticles" type="GPUParticles2D"]
+emitting = false
+amount = 32
+process_material = SubResource("ParticleProcessMaterial_f4egm")
+lifetime = 0.5
+one_shot = true
+explosiveness = 1.0
+trail_enabled = true
+trail_lifetime = 0.1
+trail_sections = 4
+script = ExtResource("1_vqpo4")
+
+[connection signal="finished" from="." to="." method="_on_finished"]

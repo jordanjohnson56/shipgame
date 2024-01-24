@@ -5,6 +5,7 @@ extends Area2D
 @export var healthbar_width = 32
 var health
 var target
+var death_particles_scene = preload("res://enemy_death_particles.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -25,6 +26,9 @@ func _on_area_entered(area):
         area.explode()
         # check if dead
         if health <= 0:
+            var particles = death_particles_scene.instantiate()
+            particles.position = position
+            get_parent().add_child(particles)
             queue_free()
         else:
             # update healthbar
