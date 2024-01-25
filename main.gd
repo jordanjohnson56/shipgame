@@ -41,6 +41,8 @@ func spawn_enemy():
     enemy.position = spawn_point.position
     # set enemy's target
     enemy.target = $Player
+    # connect death to death sound
+    enemy.died.connect(play_enemy_death_sound)
     # create enemy
     add_child(enemy)
 
@@ -63,6 +65,7 @@ func _on_player_hurt():
     particles.position = $Player.position
     particles.finished.connect(particles.queue_free)
     add_child(particles)
+    $PlayerDamageSound.play()
 
 
 func _on_difficulty_timer_timeout():
@@ -77,3 +80,7 @@ func play_fire_sound():
     var child_index = randi_range(0, $FireSounds.get_child_count() - 1)
     var fire_sound = $FireSounds.get_child(child_index)
     fire_sound.play()
+
+
+func play_enemy_death_sound():
+    $EnemyDeathSound.play()

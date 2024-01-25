@@ -1,10 +1,11 @@
-[gd_scene load_steps=12 format=3 uid="uid://d1yulp8eccvlb"]
+[gd_scene load_steps=13 format=3 uid="uid://d1yulp8eccvlb"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_x3x6b"]
 [ext_resource type="PackedScene" uid="uid://cjv6ob8bb0414" path="res://player.tscn" id="2_fnnxj"]
 [ext_resource type="AudioStream" uid="uid://bdrbu8r7ovv1d" path="res://sound/fire.wav" id="3_fqxxp"]
 [ext_resource type="PackedScene" uid="uid://cxavdnpec18y3" path="res://hud.tscn" id="4_ki6ys"]
 [ext_resource type="AudioStream" uid="uid://cxbbdll8wr5a7" path="res://sound/Hero Immortal.mp3" id="5_547um"]
+[ext_resource type="AudioStream" uid="uid://c7ittsdrw1suk" path="res://sound/pop.wav" id="6_1rkhn"]
 
 [sub_resource type="Curve2D" id="Curve2D_w5d2k"]
 _data = {
@@ -95,6 +96,20 @@ bus = &"Projectiles"
 stream = ExtResource("5_547um")
 volume_db = -5.0
 autoplay = true
+
+[node name="EnemyDeathSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_1rkhn")
+volume_db = -10.0
+pitch_scale = 0.8
+max_polyphony = 3
+bus = &"EnemyDeath"
+
+[node name="PlayerDamageSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_1rkhn")
+volume_db = -5.0
+pitch_scale = 0.6
+max_polyphony = 3
+bus = &"PlayerDamage"
 
 [connection signal="died" from="Player" to="." method="game_over"]
 [connection signal="hurt" from="Player" to="." method="_on_player_hurt"]

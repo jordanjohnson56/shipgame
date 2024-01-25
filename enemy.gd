@@ -1,5 +1,7 @@
 extends Area2D
 
+signal died
+
 @export var max_health = 2
 @export var speed = 50.0
 @export var healthbar_width = 32
@@ -29,6 +31,7 @@ func _on_area_entered(area):
             var particles = death_particles_scene.instantiate()
             particles.position = position
             get_parent().add_child(particles)
+            died.emit()
             queue_free()
         else:
             # update healthbar

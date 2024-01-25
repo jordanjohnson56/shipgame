@@ -1,4 +1,4 @@
-[gd_resource type="AudioBusLayout" load_steps=4 format=3 uid="uid://h6hrj5150ng4"]
+[gd_resource type="AudioBusLayout" load_steps=9 format=3 uid="uid://h6hrj5150ng4"]
 
 [sub_resource type="AudioEffectReverb" id="AudioEffectReverb_lftk1"]
 resource_name = "Reverb"
@@ -19,6 +19,35 @@ band_db/3200_hz = -4.0
 resource_name = "HighPassFilter"
 cutoff_hz = 500.0
 
+[sub_resource type="AudioEffectEQ" id="AudioEffectEQ_4sgyp"]
+resource_name = "EQ"
+band_db/32_hz = 3.2
+band_db/100_hz = 3.2
+band_db/320_hz = 3.2
+band_db/10000_hz = -9.6
+
+[sub_resource type="AudioEffectReverb" id="AudioEffectReverb_6r76n"]
+resource_name = "Reverb"
+predelay_msec = 100.0
+room_size = 0.1
+damping = 0.1
+spread = 0.5
+hipass = 0.2
+
+[sub_resource type="AudioEffectLowPassFilter" id="AudioEffectLowPassFilter_pgd3p"]
+resource_name = "LowPassFilter"
+cutoff_hz = 1500.0
+
+[sub_resource type="AudioEffectReverb" id="AudioEffectReverb_su65v"]
+resource_name = "Reverb"
+room_size = 0.6
+damping = 1.0
+hipass = 0.15
+wet = 0.7
+
+[sub_resource type="AudioEffectChorus" id="AudioEffectChorus_ge7gw"]
+resource_name = "Chorus"
+
 [resource]
 bus/1/name = &"Projectiles"
 bus/1/solo = false
@@ -32,3 +61,25 @@ bus/1/effect/1/effect = SubResource("AudioEffectEQ_b73cj")
 bus/1/effect/1/enabled = true
 bus/1/effect/2/effect = SubResource("AudioEffectHighPassFilter_vgwwd")
 bus/1/effect/2/enabled = true
+bus/2/name = &"EnemyDeath"
+bus/2/solo = false
+bus/2/mute = false
+bus/2/bypass_fx = false
+bus/2/volume_db = 0.0
+bus/2/send = &"Master"
+bus/2/effect/0/effect = SubResource("AudioEffectEQ_4sgyp")
+bus/2/effect/0/enabled = true
+bus/2/effect/1/effect = SubResource("AudioEffectReverb_6r76n")
+bus/2/effect/1/enabled = true
+bus/3/name = &"PlayerDamage"
+bus/3/solo = false
+bus/3/mute = false
+bus/3/bypass_fx = false
+bus/3/volume_db = 0.0
+bus/3/send = &"Master"
+bus/3/effect/0/effect = SubResource("AudioEffectLowPassFilter_pgd3p")
+bus/3/effect/0/enabled = true
+bus/3/effect/1/effect = SubResource("AudioEffectReverb_su65v")
+bus/3/effect/1/enabled = true
+bus/3/effect/2/effect = SubResource("AudioEffectChorus_ge7gw")
+bus/3/effect/2/enabled = true
