@@ -38,32 +38,36 @@ scale_curve = SubResource("CurveTexture_6ifv7")
 color_ramp = SubResource("GradientTexture1D_wecqc")
 
 [node name="Main" type="Node"]
+process_mode = 3
 script = ExtResource("1_x3x6b")
 
-[node name="Player" parent="." instance=ExtResource("2_fnnxj")]
+[node name="Game" type="Node" parent="."]
+process_mode = 1
+
+[node name="Player" parent="Game" instance=ExtResource("2_fnnxj")]
+process_mode = 1
 visible = false
 
-[node name="FireCooldown" type="Timer" parent="."]
+[node name="FireCooldown" type="Timer" parent="Game"]
+process_mode = 1
 wait_time = 0.075
 one_shot = true
 
-[node name="EnemySpawns" type="Path2D" parent="."]
+[node name="EnemySpawns" type="Path2D" parent="Game"]
 curve = SubResource("Curve2D_w5d2k")
 
-[node name="EnemySpawnPoint" type="PathFollow2D" parent="EnemySpawns"]
+[node name="EnemySpawnPoint" type="PathFollow2D" parent="Game/EnemySpawns"]
 position = Vector2(-384, -256)
 
-[node name="EnemySpawnTimer" type="Timer" parent="."]
+[node name="EnemySpawnTimer" type="Timer" parent="Game"]
 
-[node name="HUD" parent="." instance=ExtResource("4_ki6ys")]
-
-[node name="DifficultyTimer" type="Timer" parent="."]
+[node name="DifficultyTimer" type="Timer" parent="Game"]
 wait_time = 5.0
 autostart = true
 
-[node name="Seconds" type="Timer" parent="."]
+[node name="Seconds" type="Timer" parent="Game"]
 
-[node name="HitParticles" type="GPUParticles2D" parent="."]
+[node name="HitParticles" type="GPUParticles2D" parent="Game"]
 emitting = false
 amount = 100
 process_material = SubResource("ParticleProcessMaterial_r8j0u")
@@ -71,53 +75,55 @@ lifetime = 0.4
 one_shot = true
 explosiveness = 1.0
 
-[node name="FireSounds" type="Node" parent="."]
+[node name="FireSounds" type="Node" parent="Game"]
 
-[node name="FireSoundHigh" type="AudioStreamPlayer" parent="FireSounds"]
+[node name="FireSoundHigh" type="AudioStreamPlayer" parent="Game/FireSounds"]
 stream = ExtResource("3_fqxxp")
 volume_db = 10.0
 max_polyphony = 10
 bus = &"Projectiles"
 
-[node name="FireSoundMid" type="AudioStreamPlayer" parent="FireSounds"]
+[node name="FireSoundMid" type="AudioStreamPlayer" parent="Game/FireSounds"]
 stream = ExtResource("3_fqxxp")
 volume_db = 10.0
 pitch_scale = 0.95
 max_polyphony = 10
 bus = &"Projectiles"
 
-[node name="FireSoundLow" type="AudioStreamPlayer" parent="FireSounds"]
+[node name="FireSoundLow" type="AudioStreamPlayer" parent="Game/FireSounds"]
 stream = ExtResource("3_fqxxp")
 volume_db = 10.0
 pitch_scale = 0.9
 max_polyphony = 10
 bus = &"Projectiles"
 
-[node name="Music" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("5_547um")
-volume_db = -5.0
-autoplay = true
-
-[node name="EnemyDeathSound" type="AudioStreamPlayer" parent="."]
+[node name="EnemyDeathSound" type="AudioStreamPlayer" parent="Game"]
 stream = ExtResource("6_1rkhn")
 volume_db = -10.0
 pitch_scale = 0.8
 max_polyphony = 3
 bus = &"EnemyDeath"
 
-[node name="PlayerDamageSound" type="AudioStreamPlayer" parent="."]
+[node name="PlayerDamageSound" type="AudioStreamPlayer" parent="Game"]
 stream = ExtResource("6_1rkhn")
 volume_db = -5.0
 pitch_scale = 0.6
 max_polyphony = 3
 bus = &"PlayerDamage"
 
-[node name="GameOverSound" type="AudioStreamPlayer" parent="."]
+[node name="GameOverSound" type="AudioStreamPlayer" parent="Game"]
 stream = ExtResource("7_p6fmx")
 
-[connection signal="died" from="Player" to="." method="game_over"]
-[connection signal="hurt" from="Player" to="." method="_on_player_hurt"]
-[connection signal="timeout" from="EnemySpawnTimer" to="." method="spawn_enemy"]
+[node name="HUD" parent="." instance=ExtResource("4_ki6ys")]
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_547um")
+volume_db = -5.0
+autoplay = true
+
+[connection signal="died" from="Game/Player" to="." method="game_over"]
+[connection signal="hurt" from="Game/Player" to="." method="_on_player_hurt"]
+[connection signal="timeout" from="Game/EnemySpawnTimer" to="." method="spawn_enemy"]
+[connection signal="timeout" from="Game/DifficultyTimer" to="." method="_on_difficulty_timer_timeout"]
+[connection signal="timeout" from="Game/Seconds" to="HUD" method="_on_seconds_timeout"]
 [connection signal="start_game" from="HUD" to="." method="start_game"]
-[connection signal="timeout" from="DifficultyTimer" to="." method="_on_difficulty_timer_timeout"]
-[connection signal="timeout" from="Seconds" to="HUD" method="_on_seconds_timeout"]

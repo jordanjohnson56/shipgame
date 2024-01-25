@@ -90,8 +90,8 @@ shortcut = SubResource("Shortcut_vmu77")
 shortcut_in_tooltip = false
 text = "Start"
 
-[node name="QuitButton" type="Button" parent="StartButton"]
-layout_mode = 1
+[node name="QuitButton" type="Button" parent="."]
+process_mode = 3
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -142,4 +142,4 @@ horizontal_alignment = 2
 vertical_alignment = 2
 
 [connection signal="pressed" from="StartButton" to="." method="_on_start_button_pressed"]
-[connection signal="pressed" from="StartButton/QuitButton" to="." method="_on_quit_button_pressed"]
+[connection signal="pressed" from="QuitButton" to="." method="_on_quit_button_pressed"]

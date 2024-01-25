@@ -9,9 +9,15 @@ func _ready():
     reset()
 
 
+func pause_menu():
+    $Message.text = "PAUSED"
+    $QuitButton.show()
+
+
 func reset():
-    $Message.text = "Ship Game"
+    $Message.text = "Pressure"
     $StartButton.show()
+    $QuitButton.show()
 
 
 func set_time(new_time):
@@ -34,10 +40,15 @@ func _on_seconds_timeout():
 
 
 func _on_start_button_pressed():
-    $StartButton.hide()
-    $Message.text = ""
+    hide_menu()
     set_time(0)
     start_game.emit()
+
+
+func hide_menu():
+    $StartButton.hide()
+    $QuitButton.hide()
+    $Message.text = ""
 
 
 func _on_quit_button_pressed():
