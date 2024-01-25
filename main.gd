@@ -53,6 +53,7 @@ func game_over():
     $HUD.game_over()
     Input.set_custom_mouse_cursor(null)
     game_started = false
+    $GameOverSound.play()
     await get_tree().create_timer(3).timeout
     $HUD.reset()
     get_tree().call_group("enemy", "queue_free")
