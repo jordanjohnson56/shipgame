@@ -1,6 +1,7 @@
 extends Node
 
-@export var initial_enemy_timer = 1.0
+@export var initial_enemy_timer: float = 1.0
+var crosshair = preload("res://art/crosshair.png")
 var projectile_scene = preload("res://projectile.tscn")
 var enemy_scene = preload("res://enemy.tscn")
 var game_started = false
@@ -28,6 +29,7 @@ func start_game():
     $EnemySpawnTimer.start()
     $Seconds.start()
     $HUD.set_health($Player.health)
+    Input.set_custom_mouse_cursor(crosshair, Input.CURSOR_ARROW, Vector2(16,16))
     game_started = true
 
 
@@ -47,6 +49,7 @@ func game_over():
     $EnemySpawnTimer.stop()
     $Seconds.stop()
     $HUD.game_over()
+    Input.set_custom_mouse_cursor(null)
     game_started = false
     await get_tree().create_timer(3).timeout
     $HUD.reset()
