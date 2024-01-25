@@ -38,3 +38,7 @@ func _on_start_button_pressed():
     $Message.text = ""
     set_time(0)
     start_game.emit()
+
+
+func _on_quit_button_pressed():
+    get_tree().quit()
